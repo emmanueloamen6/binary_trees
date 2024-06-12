@@ -14,8 +14,8 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 	if (tree && (!tree->left && !tree->right))
 		return (1);
 
-	h_left = binary_tree_depth(tree->left);
-	h_right = binary_tree_depth(tree->right);
+	h_left = compare_depth(tree->left);
+	h_right = compare_depth(tree->right);
 
 	if ((h_left - h_right) == 0)
 		return (1);
@@ -23,18 +23,15 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 	return (0);
 }
 /**
- * binary_tree_depth - measures the depth of a node in a binary tree
+ * compare_depth - measures the depth of a node in a binary tree
  * @tree: tree of the node
  * Return: depth of the node
  */
-size_t binary_tree_depth(const binary_tree_t *tree)
+int compare_depth(const binary_tree_t *tree)
 {
-	size_t depth = 0;
-
-	while (tree && tree->parent)
+	if (tree == NULL)
 	{
-		tree = tree->parent;
-		depth++;
+		return (0);
 	}
-	return (depth);
+	return (compare_depth(tree->left) + 1 + (compare_depth(tree->right)));
 }
